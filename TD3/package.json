@@ -1,21 +1,22 @@
 {
   "name": "td3",
   "version": "1.0.0",
-  "description": "",
+  "description": "TypeScript / ExpressJs / SocketIO / Mongo",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "Marieme"
+  },
+  "author": "Marieme",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.7.2",
-    "body-parser": "^1.19.0",
+    "@types/node": "^12.12.21",
     "express": "^4.17.1",
-    "mongoose": "^5.8.6",
+    "http": "0.0.0",
+    "path": "^0.12.7",
     "socket.io": "^2.3.0"
-  },
-  "devDependencies": {
-    "@types/node": "^13.1.6"
   }
 }
