@@ -16,14 +16,8 @@ io.on("connection", function (socket) {
     };
     socket.on('message', function (message) {
         console.log(message);
-        console.log("event message in server");
+        console.log("Le message");
         io.emit('cool', message);
-    });
-    socket.on('firstMessage', function (message) {
-        currentUser.name = message;
-        console.log(currentUser);
-        console.log("event FirstMessage in server");
-        io.emit('secondMessage', message);
     });
     socket.on('disconnect', function () {
         console.log('user disconnected');
