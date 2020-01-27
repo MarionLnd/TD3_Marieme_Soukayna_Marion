@@ -8,6 +8,7 @@ var io = require("socket.io")(http);
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
+
 io.on("connection", function (socket) {
     console.log('a user connected f');
     io.emit('Bonjour !');

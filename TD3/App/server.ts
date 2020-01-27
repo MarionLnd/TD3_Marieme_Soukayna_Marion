@@ -10,7 +10,7 @@ app.get("/", (req: any, res: any) => {
 });
 
 io.on("connection", function (socket: any) {
-    console.log('a user connected f');
+    console.log('Un utilisateur est connecté');
     let currentUser = {
         'name' : '',
         'ssn' : ''
@@ -23,7 +23,7 @@ io.on("connection", function (socket: any) {
     });
 
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        console.log('Utilisateur déconnecté');
     });
 });
 
