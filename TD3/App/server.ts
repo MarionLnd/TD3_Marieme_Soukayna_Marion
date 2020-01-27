@@ -9,7 +9,7 @@ app.get("/", (req: any, res: any) => {
     res.sendFile(path.join(__dirname,'index.html'))
 });
 
-io.on("connection", function (socket: any) {
+io.on("connect", function (socket: any) {
     console.log('Un utilisateur est connecté');
     let currentUser = {
         'name' : '',
