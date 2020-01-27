@@ -8,10 +8,8 @@ var io = require("socket.io")(http);
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-
 io.on("connection", function (socket) {
-    console.log('a user connected f');
-    io.emit('Bonjour !');
+    console.log('Un utilisateur est connecté');
     var currentUser = {
         'name': '',
         'ssn': ''
@@ -22,7 +20,7 @@ io.on("connection", function (socket) {
         io.emit('cool', message);
     });
     socket.on('disconnect', function () {
-        console.log('user disconnected');
+        console.log('Utilisateur déconnecté');
     });
 });
 var server = http.listen(3000, function () {
