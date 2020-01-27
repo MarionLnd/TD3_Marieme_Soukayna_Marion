@@ -10,6 +10,7 @@ app.get("/", function (req, res) {
 });
 io.on("connection", function (socket) {
     console.log('a user connected f');
+    io.emit('Bonjour !');
     var currentUser = {
         'name': '',
         'ssn': ''
