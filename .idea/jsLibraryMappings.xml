@@ -2,5 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{bootstrap, index-cdn, jquery-1.11.1}" />
+    <excludedPredefinedLibrary name="TD3_Marieme_Soukayna_Marion/Chatbot/node_modules" />
   </component>
 </project>
