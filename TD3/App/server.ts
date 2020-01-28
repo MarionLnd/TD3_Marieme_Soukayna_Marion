@@ -23,9 +23,8 @@ io.on("connect", function (socket: any) {
 
     // get received msg
     socket.on('sending message', (message) => {
-        console.log('Message is received :', message);
-        // echo the received message back down the
-        io.sockets.emit('new message', { message: ' ** ' + message });
+        io.sockets.emit('new message', {message: ' ** ' + message})
+    });
 });
 
 const server = http.listen(3000, function() {

@@ -15,6 +15,8 @@
 </head>
 <body>
 <ul id="messages"></ul>
+<div id="chatArea">
+</div>
 <form action="" id="myForm">
     <input id="txt" autocomplete="off" /><button>Send</button>
 </form>
@@ -35,10 +37,9 @@
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());
-            txt.val('');
         });
         socket.on('new message', function (data) {
-            $('#messages').append(txt.val());
+            chatArea.append('<div  class="well"> ' + txt.val() + '</div>');
         });
     });
 </script>
