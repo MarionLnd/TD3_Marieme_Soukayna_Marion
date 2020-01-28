@@ -15,7 +15,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>//var socket = io();</script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script type="text/javascript" src="server.js"></script>
 </head>
 <body>
 <ul id="messages"></ul>
@@ -23,4 +22,19 @@
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
 </body>
+<script>
+    jQuery(document).ready(function () {
+        var socket = io.connect();
+        var form = jQuery('#myForm');
+        var txt = jQuery('#txt');
+        var chatArea = jQuery('#chatArea');
+        form.submit(function(e){
+            e.preventDefault();
+            socket.emit('Message', txt.val());
+        });
+        socket.on('Nouv Messgae', function (data) {
+            chatArea.append('<div class="well" >'+ data.message + '</div>');
+        })
+    })
+</script>
 </html>
