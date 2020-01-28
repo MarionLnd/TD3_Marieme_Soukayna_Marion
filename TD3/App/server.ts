@@ -9,20 +9,15 @@ app.get("/", (req: any, res: any) => {
     res.sendFile(path.join(__dirname,'index.html'))
 });
 
-io.on("connect", function (socket: any) {
+io.on("connection", function (socket: any) {
     console.log('Un utilisateur est connecté');
+    io.sockets.emit('Nouveau message', { message: "Bonjour !"});
     let currentUser = {
         'name' : '',
         'ssn' : ''
     };
 
-    socket.on('message', function(message){
-        console.log(message);
-        console.log("Le message");
-        io.emit('cool', message);
-    });
-
-    socket.on('disconnect', function(){
+    socket.on('deconnexion', function(){
         console.log('Utilisateur déconnecté');
     });
 });
