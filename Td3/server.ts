@@ -1,15 +1,18 @@
-
+/*import * as express from "express";
+import * as socketio from "socket.io";
+import * as path from "path";*/
 const express = require('express');
+const path = require('path');
+
 const app = express();
 
-const path = require('path');
+let http = require("http").Server(app);
+let io = require("socket.io")(http);
 const  request = require('request');
 
 
 
-let http = require("http").Server(app);
-let io = require("socket.io")(http);
-
+// questions to display in chatbox
 const connections = [];
 let data = new Map();
 data.set(0, ' enter your firstname');
@@ -20,7 +23,7 @@ let cpt = 0;
 let dataMap = new Map();
 let serverResponse = '';
 
-
+//log that user was connected  on port 3000 via web socket
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
@@ -31,14 +34,15 @@ io.sockets.on('connection', (socket) => {
         connections.splice(connections.indexOf(socket), 1);
     });
 
+   // get received msg
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
-        io.sockets.emit('new message', { message: ' ==> you said : ' + message });
+       // echo the received message back down the
+        io.sockets.emit('new message', { message: ' ** ' + message });
 
         cpt++;
         if (cpt != 3) {
             io.sockets.emit('new message', { message: data.get(cpt) });
-
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
 
@@ -62,8 +66,8 @@ io.sockets.on('connection', (socket) => {
 
 function asyncCall() {
     let postData = {
-        lastname: dataMap.get('firstname'),
-        birthname: dataMap.get('lastname'),
+        firstname: dataMap.get('firstname'),
+        lastname: dataMap.get('lastname'),
         ssn: dataMap.get('ssn')
     };
 
