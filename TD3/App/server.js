@@ -8,7 +8,7 @@ var io = require("socket.io")(http);
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-io.on("connection", function (socket) {
+io.on("connect", function (socket) {
     console.log('Un utilisateur est connecté');
     io.sockets.emit('Nouveau message', { message: "Bonjour !" });
     var currentUser = {
