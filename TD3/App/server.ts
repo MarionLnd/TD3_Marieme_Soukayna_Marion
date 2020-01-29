@@ -11,19 +11,10 @@ app.get("/", (req: any, res: any) => {
 
 io.on("connect", function (socket: any) {
     console.log('Un utilisateur est connecté');
-    io.sockets.emit('new message', { message: "Bonjour !"});
-    let currentUser = {
-        'name' : '',
-        'ssn' : ''
-    };
+    io.sockets.emit('new message', { message: 'Bonjour' });
 
     socket.on('deconnexion', function(){
         console.log('Utilisateur déconnecté');
-    });
-
-    // get received msg
-    socket.on('sending message', (message) => {
-        io.sockets.emit('new message', {message: ' ** ' + message})
     });
 });
 

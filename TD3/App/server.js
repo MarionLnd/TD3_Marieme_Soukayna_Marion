@@ -10,19 +10,9 @@ app.get("/", function (req, res) {
 });
 io.on("connect", function (socket) {
     console.log('Un utilisateur est connecté');
-    io.sockets.emit('new message', { message: "Bonjour !" });
-    var currentUser = {
-        'name': '',
-        'ssn': ''
-    };
+    io.sockets.emit('new message', { message: 'Bonjour' });
     socket.on('deconnexion', function () {
         console.log('Utilisateur déconnecté');
-    });
-    // get received msg
-    socket.on('sending message', function (message) {
-        console.log('Message is received :', message);
-        // echo the received message back down the
-        io.sockets.emit('new message', { message: ' ** ' + message });
     });
 });
 var server = http.listen(3000, function () {
