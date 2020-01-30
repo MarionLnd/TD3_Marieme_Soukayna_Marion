@@ -4,6 +4,7 @@ const app = express();
 
 let http = require("http").Server(app);
 let io = require("socket.io")(http);
+let validation = require('../api_ssn/app/people/helpers/ssnValidator.js');
 
 // questions to display in chatbox
 const connections = [];
@@ -36,27 +37,30 @@ io.on("connection", function (socket: any) {
         console.log('Message is received :', message);
         // echo the received message back down the
         io.sockets.emit('new message', { message: ' ** ' + message });
-        cpt++;
         if (cpt != 3) {
             io.sockets.emit('new message', { message: data.get(cpt) });
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
+        cpt++;
+        if (cpt == 0) {
+            dataMap.set('firstname', message);
+            //cpt++;
+        }
 
         if (cpt == 1) {
-            dataMap.set('firstname', message);
-        }
-
-        if (cpt == 2) {
             dataMap.set('lastname', message);
+            //cpt++;
         }
+        if (cpt == 2) {
 
-        if (cpt == 3) {
-            if (message == 0)
-            {
-                console.log("Tu as mis un 0");
-            }
             dataMap.set('ssn', message);
-            cpt = 0;
+            try
+            {
+                console.log(validation.isValid(message));
+            }
+            catch (e) {
+                console.log(e);
+            }
         }
     });
 });
