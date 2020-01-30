@@ -1,33 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <title>Socket.IO chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Node.js Socket.io Chat Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font: 13px Helvetica, Arial; }
-        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-        #messages { list-style-type: none; margin: 0; padding: 0; }
-        #messages li { padding: 5px 10px; }
-        #messages li:nth-child(odd) { background: #eee; }
+        body {
+            height:650px;
+            background: url("images/server.png");
+            background-repeat: no-repeat;
+            background-size: cover ;
+            background-color: rgba(0,0,0,0.3);
+            width: 100% ;
+        // background-image: fixed;
+            background-blend-mode: overlay;
+            padding: 100px 0px;
+            box-sizing: border-box;
+            color: #fff;
+            text-align: center;
+
+
+
+        }
+        .well {
+            width: 200px;
+            border: 3px outset #B04E30 ;
+            -webkit-border-radius: 30%;
+            -moz-border-radius:30%;
+            -ms-border-radius:30%;
+            -o-border-radius:30%;
+            -border-radius: 30%;
+            color: #B04E30;
+            text-align: center;
+            color: brown;
+        }
+        .titre {
+            color: brown ;
+            font-family: 'Lobster', cursive;
+            font-size: 30px;
+            text-align: center;
+
+        }
+        #txt{
+            border: 3px outset #B04E30 ;
+            -webkit-border-radius: 30%;
+            -moz-border-radius:30%;
+            -ms-border-radius:30%;
+            -o-border-radius:30%;
+            -border-radius: 30%;
+            color: #B04E30;
+            text-align: center;
+            color: brown;
+        }
+        .button{
+            border:none;
+            padding:15px 20px;
+            border-radius:25px;
+            background:rgba(255,255,255,.1);
+        }
     </style>
 </head>
+
 <body>
-<ul id="messages"></ul>
-<div id="chatArea">
+
+<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top custom-nav">
+    <h1 class="titre">SSN Information</h1>
+</nav>
+<div class="container">
+
+    <div class="row" style="margin-top: 70px;">
+        <div class="col-md-4"></div>
+
+
+        <div class="col-md-6">
+
+            <div id="chatArea">
+            </div>
+
+            <form id="myForm">
+                <div class="form-group">
+                    <textarea rows="5" id="txt" cols="5" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="button">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<form action="" id="myForm">
-    <input id="txt" autocomplete="off" /><button>Send</button>
-</form>
-</body>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    //var socket = io();
-</script>
-
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script>
     jQuery(document).ready(function () {
         var socket = io.connect();
@@ -37,10 +105,16 @@
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());
+            txt.val('');
         });
         socket.on('new message', function (data) {
-            chatArea.append('<div  class="well"> ' + txt.val() + '</div>');
+
+            chatArea.append('<div  class="well"> '
+                + data.message + '</div>');
+
         });
     });
 </script>
+</body>
+
 </html>
