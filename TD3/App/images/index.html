@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div class="row mt-5">
-        <div class="col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12 comments-main pt-4 rounded">
+        <div class="col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12 comments-main pt-4 rounded" id="chatArea">
             <ul class="p-0">
                 <li>
                     <div class="row comments mb-2">
@@ -25,14 +25,16 @@
                     </div>
                 </li>
             </ul>
+            <form id="myForm">
             <div class="row comment-box-main p-3 rounded-bottom" style="margin-top: 70%;">
                 <div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
-                    <input type="text" class="form-control" placeholder="comment ...." />
+                    <input type="text" class="form-control" placeholder="comment ...." id="txt"/>
                 </div>
                 <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
                     <button class="btn btn-info">Send</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </div>
