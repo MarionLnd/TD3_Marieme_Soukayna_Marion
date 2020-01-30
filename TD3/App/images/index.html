@@ -4,7 +4,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="index.css.css">
 </head>
 <body>
 <div class="container">
@@ -17,11 +17,21 @@
                             <img id="User-photo" src="http://nicesnippets.com/demo/man01.png" class="rounded-circle" />
                         </div>
                         <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
-                            <h4 class="m-0"><a href="#">Jacks David</a></h4>
+                            <h4 class="m-0"><a href="#">Server</a></h4>
                             <time class="text-white ml-3">1 hours ago</time>
                             <like></like>
-                            <p class="mb-0 text-white">Thank you for visiting all the way from New York.</p>
+                            <p class="mb-0 text-white"></p>
                         </div>
+                    </div>
+                    <div class="row comment-box-main p-3 rounded-bottom" id="chatArea">
+                        <form id="myForm">
+                            <div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
+                                <input type="text" id="txt" class="form-control" placeholder="comment ...." />
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
+                                <button class="btn btn-info" type="submit" >Send</button>
+                            </div>
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -30,4 +40,5 @@
 </div>
 </body>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.14/vue.min.js'></script>
+<script src="index.js"></script>
 </html>
