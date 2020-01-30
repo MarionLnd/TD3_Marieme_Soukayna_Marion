@@ -9,8 +9,9 @@ informationFinder.getInfo = function (ssn) {
         infos.set('0',informationFinder.extractSex(ssn));
         infos.set('1',informationFinder.extractBirthDate(ssn));
         infos.set('2',informationFinder.extractBirthPlace(ssn));
-        infos.set('3',informationFinder.extractPosition(ssn));
-        console.log(infos);
+        infos.set('3',informationFinder.extractPays(ssn));
+        infos.set('4',informationFinder.extractPosition(ssn));
+        return infos;
 };
 /**
  *
@@ -35,32 +36,29 @@ informationFinder.extractBirthDate = function (ssn) {
  *
  */
 informationFinder.extractBirthPlace = function (ssn) {
-        let dept = +ssn.substr(6, 2);
+        dept = +ssn.substr(6, 2);
         // --- Case DOM TOM
         if (dept === 97 || dept === 98) {
-                departement = ssn.substr(5, 3),
+                dept = ssn.substr(5, 3),
                 commune = ssn.substr(8, 2)
         }
         else if (dept === 99) {
-                departement = "Etranger";
+                dept = "Etranger";
         }
         else {
-                departement= ssn.substr(5, 2),
+                dept= ssn.substr(5, 2),
                 commune = ssn.substr(7, 3)
         }
-
-        return departement;
+    return dept;
 };
 
 informationFinder.extractPays = function (ssn){
-    let depart = informationFinder.extractBirthPlace(ssn);
-    if (depart === "Etranger")
+    d = informationFinder.extractBirthPlace(ssn);
+    pys = ssn.substr(7,3 );
+    console.log(pys);
+    if (d === "99")
     {
-        pays = paysInfo.get(pays);
-    }
-    else
-    {
-        pays = "France";
+        pays = paysInfo.get(pys);
     }
     return pays;
 };
