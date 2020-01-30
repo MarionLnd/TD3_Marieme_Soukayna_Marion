@@ -67,7 +67,6 @@ io.on("connection", function (socket: any) {
                         dataMap.set("Departement", infos.extractBirthPlace(message));
                     }
                     dataMap.set("Pays", infos.extractPays(message));
-                    console.log(infos.getInfo(message));
                 }
 
             }
