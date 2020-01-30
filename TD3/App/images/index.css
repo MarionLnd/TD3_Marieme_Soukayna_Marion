@@ -4,6 +4,7 @@ body{
 }
 .comments-main{
     background: #FFF;
+    height: 500px;
 }
 .comment time, .comment:hover time,.icon-rocknroll, .like-count {
     -webkit-transition: .25s opacity linear;
