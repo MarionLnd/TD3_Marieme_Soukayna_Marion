@@ -6,7 +6,7 @@ informationFinder.getInfo = function (ssn) {
         infos.set('1',informationFinder.extractBirthDate(ssn));
         infos.set('2',informationFinder.extractBirthPlace(ssn));
         infos.set('3',informationFinder.extractPosition(ssn));
-        return infos;
+        console.log(infos);
 };
 /**
  *

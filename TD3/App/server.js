@@ -3,10 +3,7 @@ exports.__esModule = true;
 var express = require("express");
 var path = require("path");
 var app = express();
-var http = require("http").Server(app);
-var io = require("socket.io")(http);
-var validation = require('../ssn/ssnValidator.js');
-var infos = require('../ssn/informationFinder');
+var http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'), infos = require('../ssn/informationFinder.js');
 // questions to display in chatbox
 var connections = [];
 var data = new Map();

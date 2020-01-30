@@ -27,11 +27,13 @@ ssnValidator.controlSsnKey = function (ssn) {
 ssnValidator.isValid = function(ssn){
     if (ssnValidator.controlSsnKey(ssn) && ssnValidator.controlSsnValue(ssn))
     {
-        console.log("OK");
+        let result = "OK";
+        console.log(result);
     }
     else
     {
-        console.log('KO');
+        let result = "KO";
+        console.log(result);
     }
 };
 
