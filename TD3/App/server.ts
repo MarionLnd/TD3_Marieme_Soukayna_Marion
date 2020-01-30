@@ -23,12 +23,10 @@ app.get("/", (req: any, res: any) => {
 //log that user was connected  on port 3000 via web socket
 io.on("connection", function (socket: any) {
     console.log('a user connected f');
-    io.sockets.emit('new message', { message: 'BIENVENUE' });
     let currentUser = {
         'name' : '',
         'ssn' : ''
     };
-
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
     });

@@ -34,6 +34,7 @@
         var form = jQuery('#myForm');
         var txt = jQuery('#txt');
         var chatArea = jQuery('#chatArea');
+        socket.on()
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());

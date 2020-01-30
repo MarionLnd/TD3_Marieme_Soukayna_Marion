@@ -1,0 +1,26 @@
+{
+  "name": "td2",
+  "version": "1.0.0",
+  "description": "Live version about TD2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.1.0",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "connect-multiparty": "^2.2.0",
+    "consolidate": "^0.15.1",
+    "express": "^4.17.1",
+    "express-cors": "0.0.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.8.1",
+    "morgan": "^1.9.1",
+    "mustache": "^3.0.1",
+    "view-helpers": "^0.1.5"
+  }
+}
