@@ -1,12 +1,10 @@
-/*import * as express from "express";
-import * as socketio from "socket.io";
-import * as path from "path";*/
-var express = require('express');
-var path = require('path');
+"use strict";
+exports.__esModule = true;
+var express = require("express");
+var path = require("path");
 var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-//const  request = require('request');
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
@@ -16,11 +14,16 @@ data.set(2, ' enter your SSN');
 var cpt = 0;
 var dataMap = new Map();
 var serverResponse = '';
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 //log that user was connected  on port 3000 via web socket
-io.sockets.on('connection', function (socket) {
-    connections.push(socket);
-    console.log(' %s sockets is connected', connections.length);
-    io.sockets.emit('new message', { message: data.get(cpt) });
+io.on("connection", function (socket) {
+    console.log('a user connected f');
+    var currentUser = {
+        'name': '',
+        'ssn': ''
+    };
     socket.on('disconnect', function () {
         connections.splice(connections.indexOf(socket), 1);
     });
