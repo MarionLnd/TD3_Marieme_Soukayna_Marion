@@ -66,7 +66,7 @@ informationFinder.extractPays = function (ssn){
  *
  */
 informationFinder.extractPosition = function (ssn) {
-    return +ssn.substr(10, 3);
+    return +ssn.substr(12, 2);
 };
 
 
