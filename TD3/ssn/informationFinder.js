@@ -42,8 +42,7 @@ informationFinder.extractBirthPlace = function (ssn) {
                 commune = ssn.substr(8, 2)
         }
         else if (dept === 99) {
-                departement = "Etranger",
-                pays = ssn.substr(8, 3)
+                departement = "Etranger";
         }
         else {
                 departement= ssn.substr(5, 2),
@@ -51,6 +50,19 @@ informationFinder.extractBirthPlace = function (ssn) {
         }
 
         return departement;
+};
+
+informationFinder.extractPays = function (ssn){
+    let depart = informationFinder.extractBirthPlace(ssn);
+    if (depart === "Etranger")
+    {
+        pays = paysInfo.get(pays);
+    }
+    else
+    {
+        pays = "France";
+    }
+    return pays;
 };
 /**
  *
