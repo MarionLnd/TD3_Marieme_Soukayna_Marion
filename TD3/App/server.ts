@@ -1,16 +1,9 @@
-/*import * as express from "express";
-import * as socketio from "socket.io";
-import * as path from "path";*/
-const express = require('express');
-const path = require('path');
-
+import * as express from "express";
+import * as path from "path";
 const app = express();
 
 let http = require("http").Server(app);
 let io = require("socket.io")(http);
-const  request = require('request');
-
-
 
 // questions to display in chatbox
 const connections = [];
@@ -23,12 +16,17 @@ let cpt = 0;
 let dataMap = new Map();
 let serverResponse = '';
 
-//log that user was connected  on port 3000 via web socket
-io.sockets.on('connection', (socket) => {
-    connections.push(socket);
-    console.log(' %s sockets is connected', connections.length);
-    io.sockets.emit('new message', { message: data.get(cpt) });
+app.get("/", (req: any, res: any) => {
+    res.sendFile(path.join(__dirname,'index.html'))
+});
 
+//log that user was connected  on port 3000 via web socket
+io.on("connection", function (socket: any) {
+    console.log('a user connected f');
+    let currentUser = {
+        'name' : '',
+        'ssn' : ''
+    };
 
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
@@ -60,4 +58,8 @@ io.sockets.on('connection', (socket) => {
         }
 
     });
+});
+
+const server = http.listen(3000, function() {
+    console.log("Listening on *:3000");
 });

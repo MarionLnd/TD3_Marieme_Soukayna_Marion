@@ -6,7 +6,7 @@ var path = require('path');
 var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-var request = require('request');
+//const  request = require('request');
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
@@ -45,4 +45,7 @@ io.sockets.on('connection', function (socket) {
             cpt = 0;
         }
     });
+});
+var server = http.listen(3000, function () {
+    console.log("Listening on *:3000");
 });
