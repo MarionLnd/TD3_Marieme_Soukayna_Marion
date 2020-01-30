@@ -36,7 +36,6 @@ io.on("connection", function (socket: any) {
         console.log('Message is received :', message);
         // echo the received message back down the
         io.sockets.emit('new message', { message: ' ** ' + message });
-
         cpt++;
         if (cpt != 3) {
             io.sockets.emit('new message', { message: data.get(cpt) });
@@ -52,6 +51,10 @@ io.on("connection", function (socket: any) {
         }
 
         if (cpt == 3) {
+            if (message == 0)
+            {
+                console.log("Tu as mis un 0");
+            }
             dataMap.set('ssn', message);
             cpt = 0;
         }
