@@ -10,6 +10,7 @@ let data = new Map();
 data.set(0, ' enter your firstname');
 data.set(1, ' enter your lastname');
 data.set(2, ' enter your SSN');
+
 let cpt = 0;
 
 let dataMap = new Map();
@@ -56,6 +57,10 @@ io.on("connection", function (socket: any) {
                 console.log(validation.isValid(message));
                 if(validation.isValid(message))
                 {
+                    dataMap.set("Genre", infos.extractSex(message));
+                    dataMap.set("Naissance", infos.extractBirthDate(message));
+                    dataMap.set("Departement", infos.extractBirthPlace(message));
+                    dataMap.set("Pays", infos.extractSex(message));
                     console.log(infos.getInfo(message));
                 }
 

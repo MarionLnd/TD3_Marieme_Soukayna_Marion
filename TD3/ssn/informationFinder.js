@@ -31,7 +31,7 @@ informationFinder.extractBirthDate = function (ssn) {
  *
  */
 informationFinder.extractBirthPlace = function (ssn) {
-        let dept = +ssn.substr(5, 2);
+        let dept = +ssn.substr(6, 2);
         // --- Case DOM TOM
         if (dept === 97 || dept === 98) {
                 departement = ssn.substr(5, 3),
