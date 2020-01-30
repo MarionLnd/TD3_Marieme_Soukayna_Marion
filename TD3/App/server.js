@@ -6,6 +6,7 @@ var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 var validation = require('../ssn/ssnValidator.js');
+var infos = require('../ssn/informationFinder');
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
@@ -51,6 +52,9 @@ io.on("connection", function (socket) {
             dataMap.set('ssn', message);
             try {
                 console.log(validation.isValid(message));
+                if (validation.isValid(message)) {
+                    console.log(infos.getInfo(message));
+                }
             }
             catch (e) {
                 console.log(e);

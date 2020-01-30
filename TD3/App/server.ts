@@ -1,10 +1,8 @@
 import * as express from "express";
 import * as path from "path";
 const app = express();
-
-let http = require("http").Server(app);
-let io = require("socket.io")(http);
-let validation = require('../ssn/ssnValidator.js');
+let http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'),
+    infos = require('../ssn/informationFinder.js');
 
 // questions to display in chatbox
 const connections = [];
@@ -58,6 +56,11 @@ io.on("connection", function (socket: any) {
             try
             {
                 console.log(validation.isValid(message));
+                if(validation.isValid(message))
+                {
+                    console.log(infos.getInfo(message));
+                }
+
             }
             catch (e) {
                 console.log(e);
