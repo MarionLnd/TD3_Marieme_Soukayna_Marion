@@ -46,11 +46,15 @@ io.on("connection", function (socket) {
         if (cpt == 3) {
             dataMap.set('ssn', message);
             try {
-                console.log(validation.isValid(message));
                 if (validation.isValid(message)) {
                     dataMap.set("Genre", infos.extractSex(message));
                     dataMap.set("Naissance", infos.extractBirthDate(message));
-                    dataMap.set("Departement", infos.extractBirthPlace(message));
+                    if (infos.extractBirthPlace(message) === '99') {
+                        dataMap.set("Departement", "Etranger");
+                    }
+                    else {
+                        dataMap.set("Departement", infos.extractBirthPlace(message));
+                    }
                     dataMap.set("Pays", infos.extractPays(message));
                     console.log(infos.getInfo(message));
                 }
@@ -60,6 +64,7 @@ io.on("connection", function (socket) {
             }
         }
         cpt++;
+        console.log(dataMap);
     });
 });
 var server = http.listen(3000, function () {

@@ -54,7 +54,6 @@ io.on("connection", function (socket: any) {
             dataMap.set('ssn', message);
             try
             {
-                console.log(validation.isValid(message));
                 if(validation.isValid(message))
                 {
                     dataMap.set("Genre", infos.extractSex(message));
@@ -77,6 +76,7 @@ io.on("connection", function (socket: any) {
             }
         }
         cpt++;
+        console.log(dataMap);
     });
 });
 const server = http.listen(3000, function() {
