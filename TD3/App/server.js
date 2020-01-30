@@ -49,7 +49,7 @@ io.on("connection", function (socket) {
             dataMap.set('ssn', message);
             try {
                 console.log(validation.isValid(message));
-                if (validation.isValid(message)) {
+                if (validation.isValid(message) === "OK") {
                     console.log(infos.getInfo(message));
                 }
             }
