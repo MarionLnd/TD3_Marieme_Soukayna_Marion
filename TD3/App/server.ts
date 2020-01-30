@@ -17,7 +17,7 @@ let dataMap = new Map();
 let serverResponse = '';
 
 app.get("/", (req: any, res: any) => {
-    res.sendFile(path.join(__dirname,'index.html'))
+    res.sendFile(path.join(__dirname,'index_.html'))
 });
 
 //log that user was connected  on port 3000 via web socket
