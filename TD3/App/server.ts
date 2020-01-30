@@ -56,7 +56,7 @@ io.on("connection", function (socket: any) {
             try
             {
                 console.log(validation.isValid(message));
-                if(validation.isValid(message))
+                if(validation.isValid(message) === "OK")
                 {
                     console.log(infos.getInfo(message));
                 }
