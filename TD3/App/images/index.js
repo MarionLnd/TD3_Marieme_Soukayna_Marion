@@ -16,3 +16,21 @@ Vue.component('like', {
 new Vue({
     el: '.comments-main',
 });
+
+jQuery(document).ready(function () {
+    var socket = io.connect();
+    var form = jQuery('#myForm');
+    var txt = jQuery('#txt');
+    var chatArea = jQuery('#chatArea');
+    form.submit(function (e) {
+        e.preventDefault();
+        socket.emit('sending message', txt.val());
+        txt.val('');
+    });
+    socket.on('new message', function (data) {
+
+        chatArea.append('<div  class="well"> '
+            + data.message + '</div>');
+
+    });
+});
