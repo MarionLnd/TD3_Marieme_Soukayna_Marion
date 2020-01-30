@@ -62,7 +62,7 @@ informationFinder.extractBirthPlace = function (ssn) {
                 commune: ssn.substr(8, 2)
             });
         }
-        else if (dept == 99) {
+        else if (dept === 99) {
             resolve( {
                 dept: "Etranger",
                 pays: ssn.substr(7, 3)

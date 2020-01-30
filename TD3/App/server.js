@@ -35,8 +35,6 @@ io.on("connection", function (socket) {
             io.sockets.emit('new message', { message: data.get(cpt) });
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
-        console.log("Avant" + cpt);
-        console.log("Apres" + cpt);
         if (cpt == 1) {
             dataMap.set('firstname', message);
             //cpt++;
@@ -51,7 +49,6 @@ io.on("connection", function (socket) {
                 console.log(validation.isValid(message));
                 if (validation.isValid(message)) {
                     console.log(infos.getInfo(message));
-                    console.log('Message send  :', { message: infos.getInfo(message) });
                 }
             }
             catch (e) {
