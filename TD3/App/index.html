@@ -40,9 +40,7 @@
         });
         socket.on('new message', function (data) {
 
-            chatArea.append('<div  class="well"> '
-                + data.message + '</div>');
-
+            chatArea.append('<div  class="well"> ' + data.message + '</div>');
         });
     });
 </script>

@@ -56,7 +56,6 @@ io.on("connection", function (socket: any) {
             dataMap.set('ssn', message);
             cpt = 0;
         }
-
     });
 });
 const server = http.listen(3000, function() {
