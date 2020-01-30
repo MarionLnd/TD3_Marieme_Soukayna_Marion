@@ -25,9 +25,9 @@ ssnValidator.controlSsnKey = function (ssn) {
 };
 
 ssnValidator.isValid = function(ssn){
-    if (ssnValidator.controlSsnKey && ssnValidator.controlSsnValue)
+    if (ssnValidator.controlSsnKey(ssn) && ssnValidator.controlSsnValue(ssn))
     {
-        return true;
+        console.log("OK");
     }
     else
     {

@@ -5,7 +5,7 @@ var path = require("path");
 var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-var validation = require('../api_ssn/app/people/helpers/ssnValidator.js');
+var validation = require('../ssn/ssnValidator.js');
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
@@ -37,16 +37,17 @@ io.on("connection", function (socket) {
             io.sockets.emit('new message', { message: data.get(cpt) });
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
-        cpt++;
-        if (cpt == 0) {
+        console.log("Avant" + cpt);
+        console.log("Apres" + cpt);
+        if (cpt == 1) {
             dataMap.set('firstname', message);
             //cpt++;
         }
-        if (cpt == 1) {
+        if (cpt == 2) {
             dataMap.set('lastname', message);
             //cpt++;
         }
-        if (cpt == 2) {
+        if (cpt == 3) {
             dataMap.set('ssn', message);
             try {
                 console.log(validation.isValid(message));
@@ -55,6 +56,7 @@ io.on("connection", function (socket) {
                 console.log(e);
             }
         }
+        cpt++;
     });
 });
 var server = http.listen(3000, function () {
