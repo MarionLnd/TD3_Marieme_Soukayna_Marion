@@ -15,10 +15,11 @@
 </head>
 <body>
 <div id="chatArea">
-<ul id="messages"></ul>
+<ul></ul>
 <form action="" id="myForm">
     <input id="txt" autocomplete="off" /><button>Send</button>
 </form>
+</div>
 </body>
 </html>
 <script src="/socket.io/socket.io.js"></script>
@@ -39,8 +40,7 @@
             txt.val('');
         });
         socket.on('new message', function (data) {
-
-            chatArea.append('<div  class="well"> ' + data.message + '</div>');
+            chatArea.append('<div id="messages"> ' + data.message + '</div>');
         });
     });
 </script>
