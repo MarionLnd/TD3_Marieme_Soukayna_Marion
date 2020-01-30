@@ -59,7 +59,6 @@ io.on("connection", function (socket: any) {
 
     });
 });
-
 const server = http.listen(3000, function() {
     console.log("Listening on *:3000");
 });
