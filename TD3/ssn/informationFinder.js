@@ -1,5 +1,9 @@
 let informationFinder = module.exports;
 let infos = new Map();
+require("../ssn/pays.json");
+const fs= require('fs');
+const paysInfo = new Map (Object.entries(JSON.parse(fs.readFileSync('../ssn/pays.json'))));
+
 
 informationFinder.getInfo = function (ssn) {
         infos.set('0',informationFinder.extractSex(ssn));
@@ -39,12 +43,14 @@ informationFinder.extractBirthPlace = function (ssn) {
         }
         else if (dept === 99) {
                 departement = "Etranger",
-                pays = ssn.substr(7, 3)
+                pays = ssn.substr(8, 3)
         }
         else {
                 departement= ssn.substr(5, 2),
                 commune = ssn.substr(7, 3)
         }
+
+        return departement;
 };
 /**
  *

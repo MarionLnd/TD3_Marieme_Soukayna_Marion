@@ -48,6 +48,10 @@ io.on("connection", function (socket) {
             try {
                 console.log(validation.isValid(message));
                 if (validation.isValid(message)) {
+                    dataMap.set("Genre", infos.extractSex(message));
+                    dataMap.set("Naissance", infos.extractBirthDate(message));
+                    dataMap.set("Departement", infos.extractBirthPlace(message));
+                    dataMap.set("Pays", infos.extractSex(message));
                     console.log(infos.getInfo(message));
                 }
             }
