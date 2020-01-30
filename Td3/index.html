@@ -9,110 +9,165 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-  <style>
-      body {
-          height:650px;
-          background: url("images/robot.png");
-          background-repeat: no-repeat;
-          background-size: cover ;
-          background-color: rgba(0,0,0,0.3);
-          width: 100% ;
-         // background-image: fixed;
-          background-blend-mode: overlay;
-          padding: 100px 0px;
-          box-sizing: border-box;
-          color: #fff;
-          text-align: center;
+    <style>
+        body {
+            height:650px;
+            background: url("images/robot.png");
+            background-size: cover ;
+            background-color: rgba(0,0,0,0.3);
+            width: 100% ;
+            background-blend-mode: overlay;
+
+            box-sizing: border-box;
+            color: #fff;
+            text-align: center;
 
 
 
-      }
-      .well {
-          width: 200px;
-          border: 3px outset #B04E30 ;
-          -webkit-border-radius: 30%;
-          -moz-border-radius:30%;
-          -ms-border-radius:30%;
-          -o-border-radius:30%;
-          -border-radius: 30%;
-          color: #B04E30;
-          text-align: center;
-          color: brown;
-      }
-      .titre {
-          color: brown ;
-          font-family: 'Lobster', cursive;
-          font-size: 30px;
-          text-align: center;
+        }
+        .hello{
+            list-style-type: none;
+        }
+        .add {
 
-      }
-      #txt{
-          border: 3px outset #B04E30 ;
-          -webkit-border-radius: 30%;
-          -moz-border-radius:30%;
-          -ms-border-radius:30%;
-          -o-border-radius:30%;
-          -border-radius: 30%;
-          color: #B04E30;
-          text-align: center;
-          color: brown;
-      }
-      .button{
-          border:none;
-          padding:15px 20px;
-          border-radius:25px;
-          background:rgba(255,255,255,.1);
-      }
-  </style>
+            list-style-type: none;
+            color: #B04E30;
+            text-align: center;
+        }
+        .titre {
+            color: brown ;
+            font-family: 'Lobster', cursive;
+            font-size: 30px;
+            text-align: center;
+
+
+        }
+        .button{
+            border:none;
+            padding:15px 20px;
+            border-radius:25px;
+            background:rgba(255,255,255,.1);
+        }
+
+        .chat{
+            width:50%;
+            height:50%;
+            position:absolute;
+            padding:50px 70px 50px 70px;
+            background:white;
+            border-radius: 30px;
+            font-size:22px;
+            border-bottom:2px solid transparent;
+        }
+
+        .chatbot{
+            min-height:500px;
+            position:relative;
+            perspective:1000px;
+            transform-style:preserve-3d;
+        }
+        .chatbot .group{
+            margin-bottom:15px;
+        }
+
+        .chatbot .group .input,
+        .chatbot .group .button{
+            width:100%;
+            color:#fff;
+            display:block;
+        }
+        .chatbot .group .input,
+        .chatbot .group .button{
+            border:none;
+            padding:15px 20px;
+            border-radius:25px;
+            background:rgba(255,255,255,.1);
+        }
+
+        .chatbot .group .button{
+            background:#A0522D;
+        }
+        .chatbot .group {
+            width:15px;
+            height:15px;
+            border-radius:2px;
+            position:relative;
+            display:inline-block;
+            background:rgba(255,255,255,.1);
+        }
+
+        #info{
+            border:  3px outset #B04E30;
+            padding:15px 20px;
+            border-radius:25px;
+            background:rgba(255,255,255,.1);
+            text-align: center;
+            color: brown;
+        }
+  #nv{
+      margin-top: 0px;
+  }
+
+    </style>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top custom-nav">
-    <h1 class="titre">SSN Information</h1>
+<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top custom-nav" style="text-align: center;" >
+
+        <a href="" class="navbar-brand">  <h1 class="titre">SSN Information</h1> </a>
+
 </nav>
 <div class="container">
+    <ul id="i"></ul>
+    <ul id="bot"></ul>
 
-    <div class="row" style="margin-top: 70px;">
-        <div class="col-md-4"></div>
-
-
-        <div class="col-md-6">
-
-            <div id="chatArea">
-            </div>
-
-            <form id="myForm">
-                <div class="form-group">
-                    <textarea rows="5" id="txt" cols="5" class="form-control"></textarea>
+            <form id="form">
+                <div class="group">
+                    <input id="info"  type="text" class="input" name="inforation" >
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="button">Send</button>
+
+                <div class="group">
+                    <input type="submit" class="button" name="send" value="Send ">
                 </div>
             </form>
-        </div>
-    </div>
-
 
 </div>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script>
     jQuery(document).ready(function () {
         var socket = io.connect();
-        var form = jQuery('#myForm');
-        var txt = jQuery('#txt');
-        var chatArea = jQuery('#chatArea');
+        var form = jQuery('#form');
+        var txt = jQuery('#info');
+        var bot = jQuery('#bot');
+        var i = jQuery('#i');
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());
             txt.val('');
         });
         socket.on('new message', function (data) {
+            bot.append('<li  class="add"> '
+                + data.message + '</li>');
 
-            chatArea.append('<div  class="well"> '
-                + data.message + '</div>');
+
+        });
+        socket.on('infoextra', function (info) {
+
+            info.information.forEach(element =>
+                i.append('<li  class="add"> '
+                    + element.value + '</li>')
+            );
+
+
+        });
+        socket.on('hello', function (data) {
+
+            bot.append('<li  class="hello"> <h1>hello</h1></li>');
 
         });
     });

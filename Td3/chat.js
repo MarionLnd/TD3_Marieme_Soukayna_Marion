@@ -3,6 +3,8 @@ import * as socketio from "socket.io";
 import * as path from "path";*/
 var express = require('express');
 var path = require('path');
+var ssnvalidator = require('./ssn/ssn_validator.js');
+var informationFinder = require('./ssn/information_finder');
 var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
@@ -15,11 +17,14 @@ data.set(1, ' enter your lastname');
 data.set(2, ' enter your SSN');
 var cpt = 0;
 var dataMap = new Map();
+var information = new Map();
 var serverResponse = '';
+var ssn;
 //log that user was connected  on port 3000 via web socket
 io.sockets.on('connection', function (socket) {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
+    io.sockets.emit('hello', { message: 'welcom' });
     io.sockets.emit('new message', { message: data.get(cpt) });
     socket.on('disconnect', function () {
         connections.splice(connections.indexOf(socket), 1);
@@ -42,8 +47,20 @@ io.sockets.on('connection', function (socket) {
         }
         if (cpt == 3) {
             dataMap.set('ssn', message);
-            asyncCall();
+            //  asyncCall();
+            if (ssnvalidator.isValid(message)) {
+                dataMap.set("Genre", informationFinder.extractSex(message));
+                dataMap.set("Naissance", informationFinder.extractBirthDate(message));
+                if (informationFinder.extractBirthPlace(message) === '99') {
+                    dataMap.set("Departement", "Etranger");
+                }
+                else {
+                    dataMap.set("Departement", informationFinder.extractBirthPlace(message));
+                }
+                dataMap.set("Pays", informationFinder.extractPays(message));
+            }
             cpt = 0;
+            console.log("**********" + dataMap);
         }
     });
 });
@@ -53,31 +70,10 @@ function asyncCall() {
         lastname: dataMap.get('lastname'),
         ssn: dataMap.get('ssn')
     };
-    var clientServerOptions = {
-        uri: 'http://localhost:3011/people/',
-        body: postData,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        json: true // Automatically stringifies the body to JSON
-    };
-    request(clientServerOptions, function (error, response, body) {
-        if (error != null) {
-            console.log('error:', error);
-        }
-        else {
-            serverResponse = body;
-            console.log('statusCode:', response && response.statusCode, 'BODY ', serverResponse);
-            io.sockets.emit('new message', {
-                message: JSON.stringify(serverResponse)
-            });
-        }
-    });
 }
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-var server = http.listen(3000, function () {
+var chat = http.listen(3000, function () {
     console.log("Listening on *:3000");
 });
