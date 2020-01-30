@@ -49,8 +49,9 @@ io.on("connection", function (socket) {
             dataMap.set('ssn', message);
             try {
                 console.log(validation.isValid(message));
-                if (validation.isValid(message) === "OK") {
+                if (validation.isValid(message)) {
                     console.log(infos.getInfo(message));
+                    console.log('Message send  :', { message: infos.getInfo(message) });
                 }
             }
             catch (e) {
