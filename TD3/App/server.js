@@ -1,19 +1,19 @@
 "use strict";
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 exports.__esModule = true;
 var express = require("express");
 var path = require("path");
 var app = express();
 var http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'), infos = require('../ssn/informationFinder.js');
-/*const url ="mondodb://localhost:27017";
-const person = MongoCient.connect(url);
-const  db=person.db('person');
-const output= db.collection('person').insert({
-    fisrtname: dataMap.get('firstnme'),
-    lastname: dataMap.get('lastname'),
-    Genre: dataMap.get('Genre'),
-    Naissance: dataMap.get('Naissance'),
-    Departement: dataMap.get('Departement')
-});*/
+var creation = require('../App/models/person.js');
+//§§§§§§§§§§§§§
+//§§§§§§§§§§§§§§
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
@@ -73,6 +73,7 @@ io.on("connection", function (socket) {
                         io.sockets.emit('messageAffichage', { message: key + " : " + value, key: key, value: value });
                     });
                     if (dataMap.get("sauvegarde").toLowerCase() === "oui") {
+                        console.log(mapToJson(dataMap));
                     }
                 }
                 else {
@@ -95,3 +96,14 @@ io.on("connection", function (socket) {
 var server = http.listen(3000, function () {
     console.log("Listening on *:3000");
 });
+function strMapToObj(strMap) {
+    var obj = Object.create(null);
+    for (var _i = 0, strMap_1 = strMap; _i < strMap_1.length; _i++) {
+        var _a = strMap_1[_i], k = _a[0], v = _a[1];
+        obj[k] = v;
+    }
+    return obj;
+}
+function mapToJson(map) {
+    return JSON.stringify(__spreadArrays(map));
+}

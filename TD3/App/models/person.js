@@ -1,16 +1,15 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-let PersonSchema = new Schema({
+const  mongoose  = require("mongoose");
+const  Schema  =  mongoose.Schema;
+let person = new Schema({
     sauvegarde : String,
     firstname : String,
-    lastname : { type : String, required : true},
-    ssn : { type : String, required : true},
-    Genre : { type : String, required : true},
-    Naissance : { type : String, required : true},
-    Departement : { type : String, required : true},
-    Pays : { type : String, required : true}
+    lastname : String,
+    ssn : String,
+    Genre : String,
+    Naissance : String,
+    Departement : String,
+    Pays : String,
 });
-
-mongoose.model('person', PersonSchema);
+let  newPerson  =  mongoose.model("Person", person);
+module.exports  =  newPerson;
 

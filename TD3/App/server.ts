@@ -4,17 +4,11 @@ const app = express();
 let http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'),
     infos = require('../ssn/informationFinder.js');
 
+//§§§§§§§§§§§§§
+const  person  = require("models/person.js");
+const  connect  = require("./dbconnexion.js");
 
-/*const url ="mondodb://localhost:27017";
-const person = MongoCient.connect(url);
-const  db=person.db('person');
-const output= db.collection('person').insert({
-    fisrtname: dataMap.get('firstnme'),
-    lastname: dataMap.get('lastname'),
-    Genre: dataMap.get('Genre'),
-    Naissance: dataMap.get('Naissance'),
-    Departement: dataMap.get('Departement')
-});*/
+//§§§§§§§§§§§§§§
 
 // questions to display in chatbox
 const connections = [];
@@ -83,7 +77,16 @@ io.on("connection", function (socket: any) {
 
                     if(dataMap.get("sauvegarde").toLowerCase() === "oui")
                     {
-
+                        let  newPerson  =  new person({
+                            sauvegarde:dataMap.get("sauvegarde"),
+                            firstname:dataMap.get("firstname"),
+                            lastname:dataMap.get("lastname"),
+                            ssn:dataMap.get("ssn"),
+                            Genre:dataMap.get("Genre"),
+                            Naissance:dataMap.get("Naissance"),
+                            Departement:dataMap.get("Departement"),
+                            Pays:dataMap.get("Pays")});
+                        newPerson.save();
                     }
                 } else {
                     io.sockets.emit('new message', { message: "Votre SSN n'est pas valide. Veuillez rentrer une valeur valide" });
@@ -93,11 +96,6 @@ io.on("connection", function (socket: any) {
                 console.log(e);
             }
         }
-
-        /*if(cpt == 3) {
-            console.log("test")
-            io.sockets.emit('new message', { message: dataMap.get("Naissance") });
-        }*/
         cpt++;
         console.log(dataMap);
     });
