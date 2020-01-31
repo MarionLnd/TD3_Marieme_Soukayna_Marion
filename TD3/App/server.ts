@@ -5,8 +5,16 @@ let http = require("http").Server(app), io = require("socket.io")(http), validat
     infos = require('../ssn/informationFinder.js');
 
 //§§§§§§§§§§§§§
-const  person  = require("models/person.js");
+const  person  = require("../App/models/person.js");
 const  connect  = require("./dbconnexion.js");
+const  bodyParser  = require("body-parser");
+const  chatRouter  = require("../App/routes/getAll");
+
+//bodyparser middleware
+app.use(bodyParser.json());
+
+//routes
+app.use("/person", chatRouter);
 
 //§§§§§§§§§§§§§§
 

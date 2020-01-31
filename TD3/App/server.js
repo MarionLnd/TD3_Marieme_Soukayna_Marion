@@ -1,18 +1,18 @@
 "use strict";
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
 exports.__esModule = true;
 var express = require("express");
 var path = require("path");
 var app = express();
 var http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'), infos = require('../ssn/informationFinder.js');
-var creation = require('../App/models/person.js');
 //§§§§§§§§§§§§§
+var person = require("../App/models/person.js");
+var connect = require("./dbconnexion.js");
+var bodyParser = require("body-parser");
+var chatRouter = require("../App/routes/getAll");
+//bodyparser middleware
+app.use(bodyParser.json());
+//routes
+app.use("/person", chatRouter);
 //§§§§§§§§§§§§§§
 // questions to display in chatbox
 var connections = [];
@@ -73,7 +73,17 @@ io.on("connection", function (socket) {
                         io.sockets.emit('messageAffichage', { message: key + " : " + value, key: key, value: value });
                     });
                     if (dataMap.get("sauvegarde").toLowerCase() === "oui") {
-                        console.log(mapToJson(dataMap));
+                        var newPerson = new person({
+                            sauvegarde: dataMap.get("sauvegarde"),
+                            firstname: dataMap.get("firstname"),
+                            lastname: dataMap.get("lastname"),
+                            ssn: dataMap.get("ssn"),
+                            Genre: dataMap.get("Genre"),
+                            Naissance: dataMap.get("Naissance"),
+                            Departement: dataMap.get("Departement"),
+                            Pays: dataMap.get("Pays")
+                        });
+                        newPerson.save();
                     }
                 }
                 else {
@@ -85,10 +95,6 @@ io.on("connection", function (socket) {
                 console.log(e);
             }
         }
-        /*if(cpt == 3) {
-            console.log("test")
-            io.sockets.emit('new message', { message: dataMap.get("Naissance") });
-        }*/
         cpt++;
         console.log(dataMap);
     });
@@ -96,14 +102,3 @@ io.on("connection", function (socket) {
 var server = http.listen(3000, function () {
     console.log("Listening on *:3000");
 });
-function strMapToObj(strMap) {
-    var obj = Object.create(null);
-    for (var _i = 0, strMap_1 = strMap; _i < strMap_1.length; _i++) {
-        var _a = strMap_1[_i], k = _a[0], v = _a[1];
-        obj[k] = v;
-    }
-    return obj;
-}
-function mapToJson(map) {
-    return JSON.stringify(__spreadArrays(map));
-}
