@@ -32,6 +32,8 @@ io.on("connection", function (socket) {
         console.log('Message is received :', message);
         if (cpt == 0) {
             dataMap.set('sauvegarde', message);
+            if (message === "Oui") {
+            }
         }
         // First message received
         if (cpt == 1) {
@@ -49,7 +51,7 @@ io.on("connection", function (socket) {
         if (cpt == 3) {
             dataMap.set('ssn', message);
             try {
-                if (validation.isValid(message)) {
+                if (validation.isValid(message) && dataMap.get("sauvegarde") === "Oui") {
                     dataMap.set("Genre", infos.extractSex(message));
                     dataMap.set("Naissance", infos.extractBirthDate(message));
                     if (infos.extractBirthPlace(message) === '99') {

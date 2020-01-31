@@ -4,6 +4,8 @@ const app = express();
 let http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'),
     infos = require('../ssn/informationFinder.js');
 
+let MongoCient = require('mongoose');
+
 // questions to display in chatbox
 const connections = [];
 let data = new Map();
@@ -37,10 +39,6 @@ io.on("connection", function (socket: any) {
         console.log('Message is received :', message);
         if(cpt == 0) {
             dataMap.set('sauvegarde', message);
-            if (message === "Oui")
-            {
-
-            }
         }
         // First message received
         if(cpt == 1) {
@@ -60,7 +58,7 @@ io.on("connection", function (socket: any) {
         if (cpt == 3) {
             dataMap.set('ssn', message);
             try {
-                if(validation.isValid(message)  && dataMap.get("sauvegarde") === "Oui") {
+                if(validation.isValid(message)) {
                     dataMap.set("Genre", infos.extractSex(message));
                     dataMap.set("Naissance", infos.extractBirthDate(message));
                     if (infos.extractBirthPlace(message) === '99') {
@@ -73,6 +71,11 @@ io.on("connection", function (socket: any) {
                         io.sockets.emit('messageAffichage', {message: key + " : " + value, key: key, value: value});
                     });
 
+                    if(dataMap.get("sauvegarde") === "Oui")
+                    {
+                        const url ="mondodb://localhost:27017";
+                        const person = MongoCient.connect(url);
+                    }
                 } else {
                     io.sockets.emit('new message', { message: "Votre SSN n'est pas valide. Veuillez rentrer une valeur valide" });
                     cpt = 1;
