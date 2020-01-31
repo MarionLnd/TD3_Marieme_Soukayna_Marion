@@ -1,7 +1,7 @@
 let informationFinder = module.exports;
 let infos = new Map();
 require("../ssn/pays.json");
-const fs= require('fs');
+ const fs= require('fs');
 const paysInfo = new Map (Object.entries(JSON.parse(fs.readFileSync('../ssn/pays.json'))));
 
 
