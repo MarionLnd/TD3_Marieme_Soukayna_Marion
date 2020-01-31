@@ -7,9 +7,8 @@ var http = require("http").Server(app), io = require("socket.io")(http), validat
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
-data.set(0, ' enter your firstname');
-data.set(1, ' enter your lastname');
-data.set(2, ' enter your SSN');
+data.set(0, 'Please enter your lastname');
+data.set(1, ' Please enter your SSN');
 var cpt = 0;
 var dataMap = new Map();
 var serverResponse = '';
@@ -29,21 +28,19 @@ io.on("connection", function (socket) {
     // get received msg
     socket.on('sending message', function (message) {
         console.log('Message is received :', message);
+        // First message received
+        dataMap.set('firstname', message);
         // echo the received message back down the
         io.sockets.emit('new message', { message: ' ** ' + message });
-        if (cpt != 3) {
+        if (cpt != 4) {
             io.sockets.emit('new message', { message: data.get(cpt) });
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
         if (cpt == 1) {
-            dataMap.set('firstname', message);
-            //cpt++;
-        }
-        if (cpt == 2) {
             dataMap.set('lastname', message);
             //cpt++;
         }
-        if (cpt == 3) {
+        if (cpt == 2) {
             dataMap.set('ssn', message);
             try {
                 if (validation.isValid(message)) {
@@ -61,6 +58,10 @@ io.on("connection", function (socket) {
             catch (e) {
                 console.log(e);
             }
+            //cpt++;
+        }
+        if (cpt == 3) {
+            console.log("test");
         }
         cpt++;
         console.log(dataMap);

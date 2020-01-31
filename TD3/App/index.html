@@ -34,7 +34,9 @@
         var form = jQuery('#myForm');
         var txt = jQuery('#txt');
         var chatArea = jQuery('#chatArea');
-        socket.on()
+        socket.on('connect', function() {
+            $('#messages').append($('<li>').text("Welcome ! Please enter your first name ?"));
+        });
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());
