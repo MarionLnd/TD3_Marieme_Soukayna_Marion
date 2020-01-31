@@ -1,0 +1,6 @@
+FROM node:13
+ADD . /TD3
+WORKDIR /TD3
+EXPOSE 3000
+
+CMD npm start
