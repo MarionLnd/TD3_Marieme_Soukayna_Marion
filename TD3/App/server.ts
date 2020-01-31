@@ -4,7 +4,31 @@ const app = express();
 let http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'),
     infos = require('../ssn/informationFinder.js');
 
-let MongoCient = require('mongoose');
+//let request = require('request');
+let Person = require('./models/person');
+const mongo = require('mongodb').MongoClient;
+
+const mg =mongo.connect('mongodb://localhost:27017/person', function (err,db) {
+    if (err) {
+        throw err;
+    }
+    console.log('Mongo Connecté');
+});
+
+
+/*const url ="mondodb://localhost:27017";
+const person = MongoCient.connect(url);
+const  db=person.db('person');
+const output= db.collection('person').insert({
+    fisrtname: dataMap.get('firstnme'),
+    lastname: dataMap.get('lastname'),
+    Genre: dataMap.get('Genre'),
+    Naissance: dataMap.get('Naissance'),
+    Departement: dataMap.get('Departement')
+
+});*/
+
+
 
 // questions to display in chatbox
 const connections = [];
@@ -71,10 +95,12 @@ io.on("connection", function (socket: any) {
                         io.sockets.emit('messageAffichage', {message: key + " : " + value, key: key, value: value});
                     });
 
-                    if(dataMap.get("sauvegarde") === "Oui")
+                    if(dataMap.get("sauvegarde").toLowerCase() === "oui")
                     {
-                        const url ="mondodb://localhost:27017";
-                        const person = MongoCient.connect(url);
+
+                        let newPerson = new Person(dataMap);
+                        newPerson.save();
+
                     }
                 } else {
                     io.sockets.emit('new message', { message: "Votre SSN n'est pas valide. Veuillez rentrer une valeur valide" });

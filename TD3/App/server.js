@@ -4,6 +4,26 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'), infos = require('../ssn/informationFinder.js');
+//let request = require('request');
+var Person = require('./models/person');
+var mongo = require('mongodb').MongoClient;
+var mg = mongo.connect('mongodb://localhost:27017/person', function (err, db) {
+    if (err) {
+        throw err;
+    }
+    console.log('Mongo Connecté');
+});
+/*const url ="mondodb://localhost:27017";
+const person = MongoCient.connect(url);
+const  db=person.db('person');
+const output= db.collection('person').insert({
+    fisrtname: dataMap.get('firstnme'),
+    lastname: dataMap.get('lastname'),
+    Genre: dataMap.get('Genre'),
+    Naissance: dataMap.get('Naissance'),
+    Departement: dataMap.get('Departement')
+
+});*/
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
@@ -32,8 +52,6 @@ io.on("connection", function (socket) {
         console.log('Message is received :', message);
         if (cpt == 0) {
             dataMap.set('sauvegarde', message);
-            if (message === "Oui") {
-            }
         }
         // First message received
         if (cpt == 1) {
@@ -51,7 +69,7 @@ io.on("connection", function (socket) {
         if (cpt == 3) {
             dataMap.set('ssn', message);
             try {
-                if (validation.isValid(message) && dataMap.get("sauvegarde") === "Oui") {
+                if (validation.isValid(message)) {
                     dataMap.set("Genre", infos.extractSex(message));
                     dataMap.set("Naissance", infos.extractBirthDate(message));
                     if (infos.extractBirthPlace(message) === '99') {
@@ -64,6 +82,10 @@ io.on("connection", function (socket) {
                     dataMap.forEach(function (value, key) {
                         io.sockets.emit('messageAffichage', { message: key + " : " + value, key: key, value: value });
                     });
+                    if (dataMap.get("sauvegarde").toLowerCase() === "oui") {
+                        var newPerson = new Person(dataMap);
+                        newPerson.save();
+                    }
                 }
                 else {
                     io.sockets.emit('new message', { message: "Votre SSN n'est pas valide. Veuillez rentrer une valeur valide" });

@@ -1,13 +1,15 @@
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let PersonSchema = new Schema({
-    prenom : String,
-    nom : { type : String, required : true},
-    SSN : { type : String, required : true},
-    genre : { type : String, required : true},
-    naissance : { type : String, required : true},
-    departement : { type : String, required : true},
-    pays : { type : String, required : true}
+    sauvegarde : String,
+    firstname : String,
+    lastname : { type : String, required : true},
+    ssn : { type : String, required : true},
+    Genre : { type : String, required : true},
+    Naissance : { type : String, required : true},
+    Departement : { type : String, required : true},
+    Pays : { type : String, required : true}
 });
 
 mongoose.model('person', PersonSchema);
