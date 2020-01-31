@@ -55,12 +55,16 @@ io.on("connection", function (socket: any) {
                 if(validation.isValid(message)) {
                     dataMap.set("Genre", infos.extractSex(message));
                     dataMap.set("Naissance", infos.extractBirthDate(message));
-                    if(infos.extractBirthPlace(message) === '99') {
+                    if (infos.extractBirthPlace(message) === '99') {
                         dataMap.set("Departement", "Etranger");
                     } else {
                         dataMap.set("Departement", infos.extractBirthPlace(message));
                     }
                     dataMap.set("Pays", infos.extractPays(message));
+                    dataMap.forEach((value, key) => {
+                        io.sockets.emit('messageAffichage', {message: key + " : " + value, key: key, value: value});
+                    });
+
                 } else {
                     io.sockets.emit('new message', { message: "Votre SSN n'est pas valide. Veuillez rentrer une valeur valide" });
                     cpt = 1;
@@ -70,10 +74,10 @@ io.on("connection", function (socket: any) {
             }
         }
 
-        if(cpt == 3) {
+        /*if(cpt == 3) {
             console.log("test")
             io.sockets.emit('new message', { message: dataMap.get("Naissance") });
-        }
+        }*/
         cpt++;
         console.log(dataMap);
     });
