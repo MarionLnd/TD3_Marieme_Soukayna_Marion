@@ -16,6 +16,7 @@
 <body>
 <div id="chatArea">
     <ul id="messages"></ul>
+    <div id="affichage"></div>
 <form action="" id="myForm">
     <input id="txt" autocomplete="off" /><button>Send</button>
 </form>
@@ -35,12 +36,18 @@
         var txt = jQuery('#txt');
         var chatArea = jQuery('#chatArea');
         socket.on('connect', function() {
-            $('#messages').append($('<li>').text("Welcome ! Please enter your first name ?"));
+            $('#messages').append($('<li>').text("Bienvenue !"));
+            $('#messages').append($('<li>').text("Veuillez entrer votre prénom:"));
         });
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());
             txt.val('');
+        });
+        socket.on('messageAffichage', function (data) {
+            //chatArea.append('<div id="messages"> ' + data.message + '</div>');
+            $('#affichage').append($('<th>').text(data.key), $('<td>').text(data.value),('<br>'));
+            //$('#affichage').append($('<td>').text(data.value));
         });
         socket.on('new message', function (data) {
             //chatArea.append('<div id="messages"> ' + data.message + '</div>');
