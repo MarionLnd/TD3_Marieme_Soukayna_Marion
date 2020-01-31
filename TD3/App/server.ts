@@ -4,17 +4,6 @@ const app = express();
 let http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'),
     infos = require('../ssn/informationFinder.js');
 
-//let request = require('request');
-let Person = require('./models/person');
-const mongo = require('mongodb').MongoClient;
-
-const mg =mongo.connect('mongodb://localhost:27017/person', function (err,db) {
-    if (err) {
-        throw err;
-    }
-    console.log('Mongo Connecté');
-});
-
 
 /*const url ="mondodb://localhost:27017";
 const person = MongoCient.connect(url);
@@ -25,10 +14,7 @@ const output= db.collection('person').insert({
     Genre: dataMap.get('Genre'),
     Naissance: dataMap.get('Naissance'),
     Departement: dataMap.get('Departement')
-
 });*/
-
-
 
 // questions to display in chatbox
 const connections = [];
@@ -97,9 +83,6 @@ io.on("connection", function (socket: any) {
 
                     if(dataMap.get("sauvegarde").toLowerCase() === "oui")
                     {
-
-                        let newPerson = new Person(dataMap);
-                        newPerson.save();
 
                     }
                 } else {

@@ -4,15 +4,6 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var http = require("http").Server(app), io = require("socket.io")(http), validation = require('../ssn/ssnValidator.js'), infos = require('../ssn/informationFinder.js');
-//let request = require('request');
-var Person = require('./models/person');
-var mongo = require('mongodb').MongoClient;
-var mg = mongo.connect('mongodb://localhost:27017/person', function (err, db) {
-    if (err) {
-        throw err;
-    }
-    console.log('Mongo Connecté');
-});
 /*const url ="mondodb://localhost:27017";
 const person = MongoCient.connect(url);
 const  db=person.db('person');
@@ -22,7 +13,6 @@ const output= db.collection('person').insert({
     Genre: dataMap.get('Genre'),
     Naissance: dataMap.get('Naissance'),
     Departement: dataMap.get('Departement')
-
 });*/
 // questions to display in chatbox
 var connections = [];
@@ -83,8 +73,6 @@ io.on("connection", function (socket) {
                         io.sockets.emit('messageAffichage', { message: key + " : " + value, key: key, value: value });
                     });
                     if (dataMap.get("sauvegarde").toLowerCase() === "oui") {
-                        var newPerson = new Person(dataMap);
-                        newPerson.save();
                     }
                 }
                 else {
