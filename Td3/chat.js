@@ -49,15 +49,7 @@ io.sockets.on('connection', function (socket) {
             dataMap.set('ssn', message);
             //  asyncCall();
             if (ssnvalidator.isValid(message)) {
-                dataMap.set("Genre", informationFinder.extractSex(message));
-                dataMap.set("Naissance", informationFinder.extractBirthDate(message));
-                if (informationFinder.extractBirthPlace(message) === '99') {
-                    dataMap.set("Departement", "Etranger");
-                }
-                else {
-                    dataMap.set("Departement", informationFinder.extractBirthPlace(message));
-                }
-                dataMap.set("Pays", informationFinder.extractPays(message));
+                console.log("ok");
             }
             cpt = 0;
             console.log("**********" + dataMap);

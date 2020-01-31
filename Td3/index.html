@@ -119,7 +119,7 @@
 
 </nav>
 <div class="container">
-    <ul id="i"></ul>
+
     <ul id="bot"></ul>
 
             <form id="form">
@@ -144,7 +144,7 @@
         var form = jQuery('#form');
         var txt = jQuery('#info');
         var bot = jQuery('#bot');
-        var i = jQuery('#i');
+
         form.submit(function (e) {
             e.preventDefault();
             socket.emit('sending message', txt.val());
@@ -156,15 +156,7 @@
 
 
         });
-        socket.on('infoextra', function (info) {
 
-            info.information.forEach(element =>
-                i.append('<li  class="add"> '
-                    + element.value + '</li>')
-            );
-
-
-        });
         socket.on('hello', function (data) {
 
             bot.append('<li  class="hello"> <h1>hello</h1></li>');

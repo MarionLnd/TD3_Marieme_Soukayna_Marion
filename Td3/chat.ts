@@ -4,7 +4,6 @@ import * as path from "path";*/
 const express = require('express');
 const path = require('path');
 
-
 const ssnvalidator = require('./ssn/ssn_validator.js');
 const informationFinder = require('./ssn/information_finder');
 
@@ -70,21 +69,7 @@ io.sockets.on('connection', (socket) => {
             {
 
 
-                dataMap.set("Genre", informationFinder.extractSex(message));
-
-                dataMap.set("Naissance", informationFinder.extractBirthDate(message));
-
-                if(informationFinder.extractBirthPlace(message) === '99')
-
-                {
-                    dataMap.set("Departement", "Etranger");
-                }
-
-                else
-                    {
-                    dataMap.set("Departement", informationFinder.extractBirthPlace(message));
-                }
-                dataMap.set("Pays", informationFinder.extractPays(message));
+             console.log("ok");
             }
             cpt = 0;
          console.log("**********"+dataMap);
