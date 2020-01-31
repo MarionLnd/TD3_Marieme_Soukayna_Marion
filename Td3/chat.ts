@@ -3,6 +3,8 @@ import * as socketio from "socket.io";
 import * as path from "path";*/
 const express = require('express');
 const path = require('path');
+
+
 const ssnvalidator = require('./ssn/ssn_validator.js');
 const informationFinder = require('./ssn/information_finder');
 
@@ -66,6 +68,8 @@ io.sockets.on('connection', (socket) => {
             if(ssnvalidator.isValid(message))
 
             {
+
+
                 dataMap.set("Genre", informationFinder.extractSex(message));
 
                 dataMap.set("Naissance", informationFinder.extractBirthDate(message));

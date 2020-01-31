@@ -2,11 +2,10 @@ let informationFinder = module.exports;
 
 let infos = new Map();
 
-require("../ressource/pays.json");
 
-const fs= require('fs');
 
-const paysInfo = new Map (Object.entries(JSON.parse(fs.readFileSync('../ressource/pays.json'))));
+
+
 
 informationFinder.getInfo = function (ssn) {
 
