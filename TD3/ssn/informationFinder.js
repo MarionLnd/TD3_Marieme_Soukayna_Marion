@@ -4,7 +4,6 @@ require("../ssn/pays.json");
  const fs= require('fs');
 const paysInfo = new Map (Object.entries(JSON.parse(fs.readFileSync('../ssn/pays.json'))));
 
-
 informationFinder.getInfo = function (ssn) {
         infos.set('0',informationFinder.extractSex(ssn));
         infos.set('1',informationFinder.extractBirthDate(ssn));

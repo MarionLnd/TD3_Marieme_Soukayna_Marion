@@ -7,9 +7,10 @@ let http = require("http").Server(app), io = require("socket.io")(http), validat
 // questions to display in chatbox
 const connections = [];
 let data = new Map();
-data.set(0, 'Veuillez entrer votre nom de famille:');
-data.set(1, ' Veuillez entrer votre numéro de sécurité sociale (SSN):');
-data.set(2, ' Affichage des informations:');
+data.set(0, "Veuillez entrer votre prénom");
+data.set(1, 'Veuillez entrer votre nom de famille:');
+data.set(2, ' Veuillez entrer votre numéro de sécurité sociale (SSN):');
+data.set(3, ' Affichage des informations:');
 
 let cpt = 0;
 
@@ -34,25 +35,32 @@ io.on("connection", function (socket: any) {
     // get received msg
     socket.on('sending message', (message) => {
         console.log('Message is received :', message);
-        // First message received
         if(cpt == 0) {
+            dataMap.set('sauvegarde', message);
+            if (message === "Oui")
+            {
+
+            }
+        }
+        // First message received
+        if(cpt == 1) {
             dataMap.set('firstname', message);
         }
         // echo the received message back down the
         io.sockets.emit('new message', { message: ' ** ' + message });
 
-        if (cpt != 3) {
+        if (cpt != 4) {
             io.sockets.emit('new message', { message: data.get(cpt) });
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
-        if (cpt == 1) {
+        if (cpt == 2) {
             dataMap.set('lastname', message);
         }
 
-        if (cpt == 2) {
+        if (cpt == 3) {
             dataMap.set('ssn', message);
             try {
-                if(validation.isValid(message)) {
+                if(validation.isValid(message)  && dataMap.get("sauvegarde") === "Oui") {
                     dataMap.set("Genre", infos.extractSex(message));
                     dataMap.set("Naissance", infos.extractBirthDate(message));
                     if (infos.extractBirthPlace(message) === '99') {
