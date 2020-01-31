@@ -46,7 +46,7 @@
         });
         socket.on('messageAffichage', function (data) {
             //chatArea.append('<div id="messages"> ' + data.message + '</div>');
-            $('#affichage').append($('<th>').text(data.key), $('<td>').text(data.value),('<br>'));
+            $('#affichage').append($('<th>').text(data.key + ": "), $('<td>').text(data.value),('<br>'));
             //$('#affichage').append($('<td>').text(data.value));
         });
         socket.on('new message', function (data) {
