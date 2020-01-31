@@ -3,6 +3,8 @@ let informationFinder = module.exports;
 let infos = new Map();
 
 
+const fs= require('fs');
+const paysInfo = new Map (Object.entries(JSON.parse(fs.readFileSync('../ssn/pays'))));
 
 informationFinder.getInfo = function (ssn) {
 
@@ -99,6 +101,16 @@ informationFinder.extractBirthPlace = function (ssn) {
  *
 
  */
+informationFinder.extractPays = function (ssn){
+    d = informationFinder.extractBirthPlace(ssn);
+    pys = ssn.substr(7,3 );
+    console.log(pys);
+    if (d === "99")
+    {
+        pays = paysInfo.get(pys);
+    }
+    return pays;
+};
 
 informationFinder.extractPosition = function (ssn) {
 
