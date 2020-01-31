@@ -41,11 +41,9 @@ informationFinder.extractBirthPlace = function (ssn) {
         if (dept === 97 || dept === 98) {
                 dept = ssn.substr(5, 3),
                 commune = ssn.substr(8, 2)
-        }
-        else if (dept === 99) {
+        } else if (dept === 99) {
                 dept = "Etranger";
-        }
-        else {
+        } else {
                 dept= ssn.substr(5, 2),
                 commune = ssn.substr(7, 3)
         }
@@ -54,11 +52,12 @@ informationFinder.extractBirthPlace = function (ssn) {
 
 informationFinder.extractPays = function (ssn){
     d = informationFinder.extractBirthPlace(ssn);
-    pys = ssn.substr(7,3 );
-    console.log(pys);
-    if (d === "99")
-    {
-        pays = paysInfo.get(pys);
+    pays = ssn.substr(7,3 );
+    console.log(pays);
+    if (d === "99") {
+        pays = paysInfo.get(pays);
+    } else {
+        pays = paysInfo.get(pays)
     }
     return pays;
 };

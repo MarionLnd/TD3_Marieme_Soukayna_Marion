@@ -7,8 +7,9 @@ var http = require("http").Server(app), io = require("socket.io")(http), validat
 // questions to display in chatbox
 var connections = [];
 var data = new Map();
-data.set(0, 'Please enter your lastname');
-data.set(1, ' Please enter your SSN');
+data.set(0, 'Veuillez entrer votre nom de famille:');
+data.set(1, ' Veuillez entrer votre numéro de sécurité sociale (SSN):');
+data.set(2, ' Affichage des informations:');
 var cpt = 0;
 var dataMap = new Map();
 var serverResponse = '';
@@ -29,16 +30,17 @@ io.on("connection", function (socket) {
     socket.on('sending message', function (message) {
         console.log('Message is received :', message);
         // First message received
-        dataMap.set('firstname', message);
+        if (cpt == 0) {
+            dataMap.set('firstname', message);
+        }
         // echo the received message back down the
         io.sockets.emit('new message', { message: ' ** ' + message });
-        if (cpt != 4) {
+        if (cpt != 3) {
             io.sockets.emit('new message', { message: data.get(cpt) });
         }
         console.log('Message send  :', { message: data.get(cpt) }, ' cpt = ', cpt);
         if (cpt == 1) {
             dataMap.set('lastname', message);
-            //cpt++;
         }
         if (cpt == 2) {
             dataMap.set('ssn', message);
@@ -54,6 +56,10 @@ io.on("connection", function (socket) {
                     }
                     dataMap.set("Pays", infos.extractPays(message));
                 }
+                else {
+                    io.sockets.emit('new message', { message: "Votre SSN n'est pas valide. Veuillez rentrer une valeur valide" });
+                    cpt = 1;
+                }
             }
             catch (e) {
                 console.log(e);
@@ -62,6 +68,7 @@ io.on("connection", function (socket) {
         }
         if (cpt == 3) {
             console.log("test");
+            io.sockets.emit('new message', { message: dataMap.get("Naissance") });
         }
         cpt++;
         console.log(dataMap);

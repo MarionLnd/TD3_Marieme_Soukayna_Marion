@@ -35,7 +35,8 @@
         var txt = jQuery('#txt');
         var chatArea = jQuery('#chatArea');
         socket.on('connect', function() {
-            $('#messages').append($('<li>').text("Welcome ! Please enter your first name ?"));
+            $('#messages').append($('<li>').text("Bienvenue !"));
+            $('#messages').append($('<li>').text("Veuillez entrer votre prénom:"));
         });
         form.submit(function (e) {
             e.preventDefault();
