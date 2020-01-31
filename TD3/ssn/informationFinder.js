@@ -57,7 +57,7 @@ informationFinder.extractPays = function (ssn){
     if (d === "99") {
         pays = paysInfo.get(pays);
     } else {
-        pays = paysInfo.get(pays)
+        pays = "FRANCE";
     }
     return pays;
 };
